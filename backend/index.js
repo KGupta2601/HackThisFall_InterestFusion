@@ -3,6 +3,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/database");
 const { redisClient } = require("./config/redis"); // Import Redis client
+const logger = require("./utils/logger");
 
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
@@ -40,19 +41,27 @@ app.use("/", userRouter);
 const startServer = async () => {
   try {
     await connectDB();
-    console.log("✅ Database connection established...");
+    logger.info("✅ Database connection established...");
 
     // Initialize Redis connection
-    //Uncomment this when you need redis caching
+    // Uncomment this when you need redis caching
     // redisClient.connect(); // Explicitly connect if using Redis 4.x+
-    // console.log("✅ Redis connection established...");
+    // logger.info("✅ Redis connection established...");
+
+    //api check
+    app.get("/", (req, res) => {
+      res.send("Welcome to Internet Fusion API");
+      logger.info("Welcome to Internet Fusion API");
+    });
 
     // Start server
+
+
     app.listen(PORT, () => {
-      console.log(`🚀 Server is running on port ${PORT}...`);
+      logger.info(`🚀 Server is running on port ${PORT}...`);
     });
   } catch (err) {
-    console.error("❌ Failed to start the server:", err.message);
+    logger.error("❌ Failed to start the server:", err.message);
   }
 };
 
