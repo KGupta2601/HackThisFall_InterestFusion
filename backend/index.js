@@ -1,3 +1,7 @@
+require("dotenv").config(); // Load environment variables
+
+console.log("Loaded Environment Variables:", process.env); // Log environment variables
+
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -15,6 +19,7 @@ const activity = require("./routes/activity");
 const metricsRouter = require("./routes/metrics");
 const client = require("prom-client");
 const responseTime = require("response-time");
+const swaggerRouter = require("./swagger"); // Import Swagger configuration
 
 const app = express();
 const PORT = process.env.PORT || 7777;
@@ -80,6 +85,9 @@ app.use("/", requestRouter);
 app.use("/", userRouter);
 app.use("/api/", activity);
 app.use("/", metricsRouter);
+
+// Swagger integration
+swaggerRouter(app); // Use Swagger middleware
 
 app.get("/", (req, res) => {
   res.send("Server is running");
