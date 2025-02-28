@@ -29,6 +29,7 @@ import VerifyCode from "./components/auth/VerifyCode";
 import SetPassword from "./components/auth/SetPassword";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
+import PublicProfile from "./components/PublicProfile";
 
 function App() {
   try {
@@ -68,7 +69,10 @@ function App() {
               <Route path="privacy" element={<PrivacyPolicy />} />
               <Route path="terms" element={<TermsOfService />} />
             </Route>
-
+            <Route
+              path="GetToKnowMe/:publicUserId"
+              element={<PublicProfile />}
+            />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="forget-password" element={<ForgetPassword />} />
@@ -77,7 +81,7 @@ function App() {
 
             <Route path="*" element={<PageNotFound />} />
             {/* <Routes> */}
-              <Route path="community" element={<Community />} />
+            <Route path="community" element={<Community />} />
             <Route path="faq" element={<FAQ />} />
             {/* </Routes> */}
           </Routes>
